@@ -12,8 +12,8 @@ puppet apply --modulepath puppet/modules/ puppet/manifests/prereq.pp
 puppet apply --modulepath puppet/modules/ puppet/manifests/prereq.pp
 
 puppet apply --modulepath puppet/modules/ puppet/manifests/oss.pp --certname openstack_controller
-#puppet apply --modulepath puppet/modules/ puppet/manifests/oss.pp --certname openstack_controller
-#puppet apply --modulepath puppet/modules/ puppet/manifests/oss.pp --certname openstack_controller
+puppet apply --modulepath puppet/modules/ puppet/manifests/oss.pp --certname openstack_controller
+puppet apply --modulepath puppet/modules/ puppet/manifests/oss.pp --certname openstack_controller
 
 #puppet apply --modulepath puppet/modules/ puppet/manifests/patch.pp
 

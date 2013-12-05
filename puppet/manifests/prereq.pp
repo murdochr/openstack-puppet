@@ -2,17 +2,14 @@ $pvolume='/dev/sdb'
 $vgroup='cinder-volumes'
 
 
-class { 'apt':
-  always_apt_update    => false,
-  disable_keys         => undef,
-  proxy_host           => false,
-  proxy_port           => '8080',
-  purge_sources_list   => false,
-  purge_sources_list_d => false,
-  purge_preferences_d  => false,
-  update_timeout       => 3600
+class { 'aptrepos::aptbase':
+    platformversion => '1_0_1',
 }
-
+include aptrepos::aptbase
+include aptrepos::puppet
+include aptrepos::zabbix
+include aptrepos::openstack
+include aptrepos::ceph
 
 notify{"${hostname}":}
 notify{"${ipaddress}":}
@@ -50,12 +47,6 @@ package { 'python-software-properties':
 
 #file { '/etc/apt/sources.list.d':
 #}
-
-
-apt::ppa { 'cloud-archive:havana':
-   notify => Exec ["/usr/bin/apt-get -y update"]
-}
-
 
 exec { "/usr/bin/apt-get -y update":
   #refreshonly => true,

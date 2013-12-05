@@ -14,11 +14,11 @@ class { 'openstack::test_file': }
 # environments
 
 # assumes that eth0 is the public interface
-$public_interface        = 'eth0'
+$public_interface        = 'bond0.851'
 # assumes that eth1 is the interface that will be used for the vm network
 # this configuration assumes this interface is active but does not have an
 # ip address allocated to it.
-$private_interface       = 'eth1'
+$private_interface       = 'bond0.899'
 # credentials
 $admin_email             = 'root@localhost'
 $admin_password          = 'keystone_admin'
@@ -84,7 +84,7 @@ node /openstack_all/ {
 
 # multi-node specific parameters
 
-$controller_node_address  = '172.30.0.24'
+$controller_node_address  = '10.8.148.1'
 
 $controller_node_public   = $controller_node_address
 $controller_node_internal = $controller_node_address

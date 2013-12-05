@@ -2,7 +2,7 @@ $pvolume='/dev/sdb'
 $vgroup='cinder-volumes'
 
 
-class { 'aptrepos::aptbase':
+class { 'aptrepos':
     platformversion => '1_0_1',
 }
 include aptrepos::aptbase

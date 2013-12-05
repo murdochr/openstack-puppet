@@ -1,5 +1,5 @@
-$pvolume='/dev/sdb'
-$vgroup='cinder-volumes'
+#$pvolume='/dev/sdb'
+#$vgroup='cinder-volumes'
 
 
 class { 'aptrepos':
@@ -21,22 +21,22 @@ host { "${hostname}":
 }
 
 
-package { 'lvm2':
-    ensure => 'latest'
-}
+#package { 'lvm2':
+#    ensure => 'latest'
+#}
 
-physical_volume { "${pvolume}":
-    ensure => present,
-}
+#physical_volume { "${pvolume}":
+#    ensure => present,
+#}
 
-volume_group {  "${vgroup}":
-    ensure => present,
-    physical_volumes => "${pvolume}"
-}
+#volume_group {  "${vgroup}":
+#    ensure => present,
+#    physical_volumes => "${pvolume}"
+#}
 
-exec { '/etc/puppet/manifests/far_lvm.conf.py':
-    subscribe => Package['lvm2'],
-    refreshonly => true }
+#exec { '/etc/puppet/manifests/far_lvm.conf.py':
+#    subscribe => Package['lvm2'],
+#    refreshonly => true }
 
 #replace with only ifs and some file placements
 

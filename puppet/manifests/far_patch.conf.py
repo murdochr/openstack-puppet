@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import os
 
-controllerip='172.30.0.24'
+controllerip='10.8.148.1'
 
 
 def findreplacefile(find,replace,afile):

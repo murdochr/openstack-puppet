@@ -9,6 +9,8 @@ class aptrepos::openstack (
         release     => "${lsbdistcodename}-updates/havana",
         repos       => 'main',
         include_src => true,
+        key         => 'EC4926EA',
+        key_server  => "${keyserver}",
     } ->
     Package <| |>
 }

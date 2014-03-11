@@ -84,7 +84,7 @@ node /openstack_all/ {
 
 # multi-node specific parameters
 
-$controller_node_address  = '172.30.0.24'
+$controller_node_address  = '172.30.0.76'
 
 $controller_node_public   = $controller_node_address
 $controller_node_internal = $controller_node_address

@@ -39,10 +39,35 @@ class osi::prereq {
         physical_volumes => "${pvolume}"
     }
 
-    exec { '/etc/puppet/manifests/far_lvm.conf.py':
-        subscribe => Package['lvm2'],
-        refreshonly => true }
 
+    file {'binary path-hibu':
+        path    => ['/opt/hibu'],
+        ensure  => 'directory'
+    } 
+
+    file {'binary path-bin':
+            path    => ['/opt/hibu/bin'],
+                    ensure  => 'directory',
+                    require => File['binary path-hibu']
+    }
+
+    file {'/opt/hibu/bin/far_lvm.conf.py':
+        source      => 'puppet:///modules/osi/far_lvm.conf.py',
+        require     => File['binary path-bin']
+    }
+
+#    file {'/etc/apt/sources.list.d':
+#        source      => 'puppet:///modules/osi/sources.list.d',
+#        recurse     =>  true,
+#        notify      =>  Exec ["/usr/bin/apt-get -y update"]
+#    }
+
+
+    exec {'/opt/hibu/bin/far_lvm.conf.py':
+        subscribe   => Package['lvm2'],
+        refreshonly => true,
+        require     => File['/opt/hibu/bin/far_lvm.conf.py']
+    }
 #replace with only ifs and some file placements
 
 
@@ -50,26 +75,32 @@ class osi::prereq {
         ensure => 'installed',
     }
 
-#file { '/etc/apt/sources.list.d':
-#}
 
 
     apt::ppa { 'cloud-archive:havana':
-       notify => Exec ["/usr/bin/apt-get -y update"]
+       #notify => Exec ["/usr/bin/apt-get -y update"],
+       #refreshonly  => true,
+       subscribe => exec['/opt/hibu/bin/far_lvm.conf.py'],
+       before   => Exec['/usr/bin/apt-get -y update']
     }
 
 
     exec { "/usr/bin/apt-get -y update":
-      #refreshonly => true,
+
       timeout => 3600,
-     # subscribe => Apt:Ppa['cloud-archive:havana']
+      refreshonly => true,
+      subscribe => Exec['/usr/bin/touch /var/lock/aptgetupdate.lck'],
+      notify    => Exec['/usr/bin/apt-get -y dist-upgrade']
+    }
+
+    exec { '/usr/bin/touch /var/lock/aptgetupdate.lck': 
+        creates => '/var/lock/aptgetupdate.lck',
     }
 
 
 
     exec { "/usr/bin/apt-get -y dist-upgrade":
-      #refreshonly => true,
+      refreshonly => true,
       timeout => 3600,
-      subscribe => Exec[ "/usr/bin/apt-get -y update"]
     }
 }

@@ -1,5 +1,6 @@
 class osi {
     notify{'osi':}
-    include osi::repo
-    include osi::prereq
+    #include osi::repo
+    #include osi::prereq
+
 }

@@ -74,12 +74,12 @@ describe 'horizon' do
       )}
       it 'generates local_settings.py' do
         verify_contents(subject, '/etc/openstack-dashboard/local_settings.py', [
-          'DEBUG = False',
+          'DEBUG = True',
           "ALLOWED_HOSTS = ['*', ]",
           "SECRET_KEY = 'elj1IWiLoWHgcyYxFVLj7cM5rGOOxWl0'",
           'OPENSTACK_HOST = "127.0.0.1"',
           'OPENSTACK_KEYSTONE_URL = "http://%s:5000/v2.0" % OPENSTACK_HOST',
-          'OPENSTACK_KEYSTONE_DEFAULT_ROLE = "Member"',
+          'OPENSTACK_KEYSTONE_DEFAULT_ROLE = "admin"',
           "    'can_set_mount_point': True,",
           'API_RESULT_LIMIT = 1000',
           "LOGIN_URL = '/horizon/auth/login/'",

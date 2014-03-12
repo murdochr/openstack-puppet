@@ -1,0 +1,48 @@
+controller
+
+afile='/etc/openstack-dashboard/local_settings.py'
+find='''DEBUG = False'''
+repl='''DEBUG = True'''
+
+findreplacefile(find,repl,afile)
+
+afile='/etc/openstack-dashboard/local_settings.py'
+find='''OPENSTACK_KEYSTONE_DEFAULT_ROLE = "Member"'''
+repl='''OPENSTACK_KEYSTONE_DEFAULT_ROLE = "admin"'''
+
+
+compute
+
+afile='/etc/nova/nova.conf'
+find='''connection=mysql://nova:nova_pass@127.0.0.1/nova'''
+repl="""connection=mysql://nova:nova_pass@%(controllerip)s/nova""" % {'controllerip':controllerip}
+
+findreplacefile(find,repl,afile)
+
+afile='/etc/cinder/cinder.conf'
+find='''sql_connection=mysql://cinder:cinder_pass@127.0.0.1/cinder'''
+repl="""sql_connection=mysql://cinder:cinder_pass@%(controllerip)s/cinder""" % {'controllerip':controllerip}
+
+findreplacefile(find,repl,afile)
+
+
+
+#
+
+
+DEBUG = <%= @django_debug.to_s.capitalize %>
+OPENSTACK_KEYSTONE_DEFAULT_ROLE = "<%= @keystone_default_role %>"
+
+
+things to do :
+
+make the puppet code work better in order -use the test files.
+flatten and use oss.pp
+remove the patches using the erb or by chasing further up chain
+
+add test that puts the cirrus image and uploads it 
+
+add the diffs and any modules needed for openstack environment and class t to be callable with controller_node,publicip,privateip etc
+
+
+http://docs.puppetlabs.com/puppet/latest/reference/lang_conditional.html#if-statements

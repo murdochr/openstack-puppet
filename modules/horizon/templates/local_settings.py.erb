@@ -4,7 +4,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from openstack_dashboard import exceptions
 
-DEBUG = <%= @django_debug.to_s.capitalize %>
+#DEBUG = <%= @django_debug.to_s.capitalize %>
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 # Required for Django 1.5.
@@ -138,7 +139,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 OPENSTACK_HOST = "<%= @keystone_host %>"
 OPENSTACK_KEYSTONE_URL = "<%= @keystone_scheme %>://%s:<%= @keystone_port %>/v2.0" % OPENSTACK_HOST
-OPENSTACK_KEYSTONE_DEFAULT_ROLE = "<%= @keystone_default_role %>"
+#OPENSTACK_KEYSTONE_DEFAULT_ROLE = "<%= @keystone_default_role %>"
+OPENSTACK_KEYSTONE_DEFAULT_ROLE = "admin"
 
 # Disable SSL certificate checks (useful for self-signed certificates):
 # OPENSTACK_SSL_NO_VERIFY = True

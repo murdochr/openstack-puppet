@@ -1,0 +1,3 @@
+class osi::oss  {
+    class { 'openstack::test_file': }
+}

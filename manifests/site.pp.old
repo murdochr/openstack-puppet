@@ -1,0 +1,22 @@
+#import 'oss.pp'
+
+
+node ub-comp-01 {
+    class { 'osi::prereq':
+        before =>  Class['osi::oss']
+    }
+    class { 'osi::oss':
+        require =>  Class['osi::prereq']
+    }
+    #class { 'osi::repo':
+    #   before =>  Class['osi::prereq']
+    #}
+
+
+}
+
+#node default {
+#    notify{'hello':}
+#    #include prereq 
+#    #include osi
+#}

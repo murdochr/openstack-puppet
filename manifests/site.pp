@@ -1,9 +1,17 @@
 #import 'oss.pp'
 
-class first {
-            notify{'first':}
-            include osi::prereq
+stage { 'setup':
+    before => Stage['main'],
 }
+
+
+class first {
+    class { 'osi::prereq':
+        stage => setup,
+                }
+}
+
+
 
 class second {
 ####### shared variables ##################
@@ -84,7 +92,7 @@ class { 'openstack::controller':
           
 }
 
-Class['first'] -> Class['second'] -> Class['openstack::controller']
+Apt::Ppa['cloud-archive:havana'] -> Exec["/usr/bin/apt-get -y dist-upgrade"] -> Class['openstack::controller'] -> Class['cinder::api']
 
 
 

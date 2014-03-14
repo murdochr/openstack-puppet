@@ -13,7 +13,7 @@ class first {
 
 
 
-class second {
+#class second {
 ####### shared variables ##################
 
 
@@ -51,10 +51,12 @@ class second {
 
 #### end shared variables #################
 
-    $controller_node_address  = '172.30.0.81'
+    $controller_node_address  = '172.30.0.82'
 
     $controller_node_public   = $controller_node_address
     $controller_node_internal = $controller_node_address
+
+class second {
 
      notify{'second':}
 
@@ -92,14 +94,50 @@ class { 'openstack::controller':
           
 }
 
-Apt::Ppa['cloud-archive:havana'] -> Exec["/usr/bin/apt-get -y dist-upgrade"] -> Class['openstack::controller'] -> Class['cinder::api']
+
+class compute {
 
 
 
-node ub-comp-01 {
+class { 'openstack::compute':
+    public_interface   => $public_interface,
+    private_interface  => $private_interface,
+    internal_address   => $ipaddress_eth0,
+    libvirt_type       => 'kvm',
+    fixed_range        => $fixed_network_range,
+    network_manager    => 'nova.network.manager.FlatDHCPManager',
+    multi_host         => true,
+    cinder_db_password => $cinder_db_password,
+    nova_db_password   => $nova_db_password,
+    nova_user_password => $nova_user_password,
+    neutron            => false,
+    rabbit_host        => $controller_node_internal,
+    rabbit_password    => $rabbit_password,
+    rabbit_user        => $rabbit_user,
+    glance_api_servers => "${controller_node_internal}:9292",
+    vncproxy_host      => $controller_node_public,
+    vnc_enabled        => true,
+    verbose            => $verbose,
+    manage_volumes     => true,
+    volume_group       => 'cinder-volumes',
+    db_host            => $controller_node_address
+  }
+}
+
+#Apt::Ppa['cloud-archive:havana'] -> Exec["/usr/bin/apt-get -y dist-upgrade"] -> Class['openstack::controller'] -> Class['cinder::api']
+
+
+
+node /ub-controller/ {
         include first
         include second
 }
+
+node /ub-comp/ {
+    include first
+    include compute
+}
+
 
 
 

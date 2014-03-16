@@ -4,6 +4,11 @@ stage { 'setup':
     before => Stage['main'],
 }
 
+stage { 'last':
+    require => Stage['main']
+   
+}
+
 
 class first {
     class { 'osi::prereq':
@@ -11,6 +16,11 @@ class first {
                 }
 }
 
+class last {
+    class { 'osi::unittest':
+        stage => last,
+    }
+}    
 
 
 #class second {
@@ -51,7 +61,7 @@ class first {
 
 #### end shared variables #################
 
-    $controller_node_address  = '172.30.0.82'
+    $controller_node_address  = '172.30.0.87'
 
     $controller_node_public   = $controller_node_address
     $controller_node_internal = $controller_node_address
@@ -131,6 +141,7 @@ class { 'openstack::compute':
 node /ub-controller/ {
         include first
         include second
+        include last
 }
 
 node /ub-comp/ {

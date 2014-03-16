@@ -157,7 +157,7 @@ def createInstance(name,hypervisorhost):
 
 
 imagename='cirros-0.3-x86_64'
-imagepath='/root/cirros-0.3.0-x86_64-disk.img'
+imagepath='/opt/hibu/bin/cirros-0.3.0-x86_64-disk.img'
 
 tenancy,serverlist=getDBdata()
 

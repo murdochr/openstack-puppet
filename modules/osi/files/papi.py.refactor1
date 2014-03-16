@@ -9,7 +9,7 @@ def getNova(tenancy):
 	d={}
 	d['username'] = 'admin'
 	d['api_key'] = 'keystone_admin'
-	d['auth_url'] = 'http://172.30.0.82:5000/v2.0'
+	d['auth_url'] = 'http://localhost:5000/v2.0'
 	d['project_id'] = '40a9b830f50b4f5d9d7780f6b73aa4ee'
 	d['tenant_id']= tenancy
 
@@ -79,7 +79,7 @@ def uploadImage(imagepath,name):
 	keystonecreds={}
 	keystonecreds['username'] = 'admin'
 	keystonecreds['password'] = 'keystone_admin'
-	keystonecreds['auth_url'] = 'http://172.30.0.82:5000/v2.0'
+	keystonecreds['auth_url'] = 'http://localhost:5000/v2.0'
 	keystonecreds['tenant_name'] = 'admin'
 
 

@@ -107,13 +107,13 @@ def createInstance(name,hypervisorhost):
 	print nova.networks.list()
 	network = nova.networks.find(label="novanetwork")
 
-	f = open('/root/.ssh/id_rsa.pub','r')
-	publickey = f.readline()[:-1]
+#   keypair works - need to add key-gen
+#	f = open('/root/.ssh/id_rsa.pub','r')
+#	publickey = f.readline()[:-1]
 	#keypair = nova.keypairs.create('openstack-unittest',publickey)
-	#keypair = nova.keypairs.find(label='openstack-unittest')
 
-	keypair=nova.keypairs.find(name='openstack-unittest')
-	print nova.keypairs.list()
+#	keypair=nova.keypairs.find(name='openstack-unittest')
+#	print nova.keypairs.list()
 
 
 	#help(nova.servers.create)
@@ -122,7 +122,7 @@ def createInstance(name,hypervisorhost):
 					 image = image.id,
 					 flavor = flavor.id,
 					 network = network.id,
-					 key_name = keypair.name,
+#					 key_name = keypair.name,
 					 availability_zone='nova:'+ hypervisorhost
 					 )
 	

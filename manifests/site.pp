@@ -10,10 +10,28 @@ stage { 'last':
 }
 
 
-class first {
-    class { 'osi::prereq':
-        stage => setup,
+class first ($env = 'dev') {
+        if $env=='dev' {
+
+                notify{'dev-prereq':}
+
+                class { 'osi::prereq':
+                        stage => setup,
                 }
+        }
+
+        elsif $env=='kop' {
+                notify{'kop-prereq':}
+
+                class { 'osi::prereqkop':
+                        stage => setup,
+                }
+        }
+
+
+        else {
+                fail('environment prerequisites can be dev or kop only')
+        }
 }
 
 class last {
@@ -139,13 +157,22 @@ class { 'openstack::compute':
 
 
 node /ub-controller/ {
-        include first
+        
+       class {'first':
+            env     =>      'kop'
+        }
+
+
         include controller
         include last
 }
 
 node /ub-comp/ {
-    include first
+
+       class {'first':
+            env     =>      'kop'
+        }
+
     include compute
 }
 

@@ -143,11 +143,12 @@ def createInstance(name,hypervisorhost):
 			serverstatus=1
 			break
 				
-		time.sleep(2)
-		testtimes -= 1		
+		testtimes -= 1
 		if testtimes==0:
 			serverstatus=1
 			break
+        	
+		time.sleep(2)
 
 	server.delete()
 	

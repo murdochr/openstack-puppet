@@ -131,7 +131,7 @@ def createInstance(name,hypervisorhost):
      
 	print server.status
 
-
+	testtimes=15
 
 	while True:
 		fserver=nova.servers.find(id=server.id)
@@ -140,11 +140,15 @@ def createInstance(name,hypervisorhost):
 			serverstatus=0
 			break
 		if fserver.status=='ERROR':
-			serverstatus='1'
+			serverstatus=1
 			break
 				
 		time.sleep(2)
-		
+		testtimes -= 1		
+		if testtimes==0:
+			serverstatus=1
+			break
+
 	server.delete()
 	
 

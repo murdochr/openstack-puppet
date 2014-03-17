@@ -150,7 +150,8 @@ class compute {
 
 node /ub-controller/ {
        class {'first':
-            env     =>      'kop'
+            #env     =>      'kop'
+            env     =>      'dev'
         }
 
 
@@ -161,7 +162,8 @@ node /ub-controller/ {
 node /ub-comp/ {
 
        class {'first':
-            env     =>      'kop'
+           #env     =>      'kop'
+           env     =>      'dev'
         }
 
     include compute

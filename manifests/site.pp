@@ -149,7 +149,6 @@ class compute {
 }
 
 node /ub-controller/ {
-        
        class {'first':
             env     =>      'kop'
         }

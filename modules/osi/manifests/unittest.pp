@@ -13,6 +13,7 @@ class osi::unittest {
 
     file {'/opt/hibu/bin/papi.py':
         source      => 'puppet:///modules/osi/papi.py',
+        require     => File['/opt/hibu/bin/cirros-0.3.0-x86_64-disk.img']
     }
 
     file {'/opt/hibu/bin/cirros-0.3.0-x86_64-disk.img':

@@ -66,9 +66,9 @@ class last {
     $controller_node_public   = $controller_node_address
     $controller_node_internal = $controller_node_address
 
-class second {
+class controller {
 
-     notify{'second':}
+     notify{'controller':}
 
 #
 #
@@ -140,7 +140,7 @@ class { 'openstack::compute':
 
 node /ub-controller/ {
         include first
-        include second
+        include controller
         include last
 }
 

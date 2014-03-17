@@ -1,5 +1,3 @@
-#import 'oss.pp'
-
 stage { 'setup':
     before => Stage['main'],
 }
@@ -90,7 +88,7 @@ class controller {
 
 #
 #
-class { 'openstack::controller':
+    class { 'openstack::controller':
     public_address          => $controller_node_public,
     public_interface        => $public_interface,
     private_interface       => $private_interface,
@@ -125,36 +123,30 @@ class { 'openstack::controller':
 
 class compute {
 
-
-
-class { 'openstack::compute':
-    public_interface   => $public_interface,
-    private_interface  => $private_interface,
-    internal_address   => $ipaddress_eth0,
-    libvirt_type       => 'kvm',
-    fixed_range        => $fixed_network_range,
-    network_manager    => 'nova.network.manager.FlatDHCPManager',
-    multi_host         => true,
-    cinder_db_password => $cinder_db_password,
-    nova_db_password   => $nova_db_password,
-    nova_user_password => $nova_user_password,
-    neutron            => false,
-    rabbit_host        => $controller_node_internal,
-    rabbit_password    => $rabbit_password,
-    rabbit_user        => $rabbit_user,
-    glance_api_servers => "${controller_node_internal}:9292",
-    vncproxy_host      => $controller_node_public,
-    vnc_enabled        => true,
-    verbose            => $verbose,
-    manage_volumes     => true,
-    volume_group       => 'cinder-volumes',
-    db_host            => $controller_node_address
-  }
+    class { 'openstack::compute':
+        public_interface   => $public_interface,
+        private_interface  => $private_interface,
+        internal_address   => $ipaddress_eth0,
+        libvirt_type       => 'kvm',
+        fixed_range        => $fixed_network_range,
+        network_manager    => 'nova.network.manager.FlatDHCPManager',
+        multi_host         => true,
+        cinder_db_password => $cinder_db_password,
+        nova_db_password   => $nova_db_password,
+        nova_user_password => $nova_user_password,
+        neutron            => false,
+        rabbit_host        => $controller_node_internal,
+        rabbit_password    => $rabbit_password,
+        rabbit_user        => $rabbit_user,
+        glance_api_servers => "${controller_node_internal}:9292",
+        vncproxy_host      => $controller_node_public,
+        vnc_enabled        => true,
+        verbose            => $verbose,
+        manage_volumes     => true,
+        volume_group       => 'cinder-volumes',
+        db_host            => $controller_node_address
+      }
 }
-
-#Apt::Ppa['cloud-archive:havana'] -> Exec["/usr/bin/apt-get -y dist-upgrade"] -> Class['openstack::controller'] -> Class['cinder::api']
-
-
 
 node /ub-controller/ {
         
@@ -175,22 +167,3 @@ node /ub-comp/ {
 
     include compute
 }
-
-
-
-
-    #class { 'osi::oss':
-    #    require =>  Class['osi::prereq']
-    #}
-    #class { 'osi::repo':
-    #   before =>  Class['osi::prereq']
-    #}
-
-
-
-
-#node default {
-#    notify{'hello':}
-#    #include prereq 
-#    #include osi
-#}
